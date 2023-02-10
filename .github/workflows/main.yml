@@ -1,0 +1,22 @@
+name: Maven CI/CD
+# it is triggered every time a push or pull request is made to master
+on:
+ push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+# to state all the diffrent jobs 
+jobs:
+  build_and_test:
+# stating the OS evn to run the job
+    runs-on: ubuntu-latest
+# setp 1 giving job access to code in our repo / setup-java version of JDK and setting up java evn that our job can run in.
+    steps:
+    - uses: actions/checkout@v2 
+    - name: Set up JDK 14
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+# build project using maven package
+    - name: Build project with Maven
+      run: mvn -B package --file pom.xml
